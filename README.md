@@ -1,3 +1,3 @@
 Frontend : HTML, CSS, React
-Backend : SCALLA
-BDD : TBD
+Backend : Scala
+BDD :N Mongodb

@@ -1,7 +1,9 @@
 [0m[[0m[0mdebug[0m] [0m[0mnot up to date. inChanged = true, force = false[0m
-[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/home/rgrimaldi/Documents/Dev%20Web/Projet/Smart-Basement-Management/smart-home-management/project/"), "smart-home-management-build")...[0m
-[0m[[0m[0minfo[0m] [0m[0mUpdating smart-home-management-build[0m
-[0m[[0m[0minfo[0m] [0m[0mResolved smart-home-management-build dependencies[0m
-[0m[[0m[0minfo[0m] [0m[0mFetching artifacts of smart-home-management-build[0m
-[0m[[0m[0minfo[0m] [0m[0mFetched artifacts of smart-home-management-build[0m
-[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/home/rgrimaldi/Documents/Dev%20Web/Projet/Smart-Basement-Management/smart-home-management/project/"), "smart-home-management-build")[0m
+[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/home/monteiro/Documents/project/devWeb/Smart-Basement-Management/Backend/project/"), "backend-build")...[0m
+[0m[[0m[0minfo[0m] [0m[0mUpdating backend-build[0m
+[0m[[0m[0minfo[0m] [0m[0mResolved backend-build dependencies[0m
+[0m[[0m[0minfo[0m] [0m[0mUpdating backend-build[0m
+[0m[[0m[0minfo[0m] [0m[0mResolved backend-build dependencies[0m
+[0m[[0m[0minfo[0m] [0m[0mFetching artifacts of backend-build[0m
+[0m[[0m[0minfo[0m] [0m[0mFetched artifacts of backend-build[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/home/monteiro/Documents/project/devWeb/Smart-Basement-Management/Backend/project/"), "backend-build")[0m

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home - Welcome & Stay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <span class="icon">🏠</span> <strong>HomeSync</strong>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="accueil.html" class="active">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="inscription.html"><button class="btn-signup">S'inscrire</button></a>
+        <a href="inscription.html"><button class="btn-signup">Se connecter</button></a>
+    </header>
+
+    <main class="container">
+        <section class="hero-section">
+            <h1>Bienvenue dans votre Maison Intelligente</h1>
+            
+            <div class="free-tour-card">
+                <h2>Free Tour : Visite Guidée de la Maison</h2>
+                <div class="carousel">
+                    <div class="tour-item">
+                        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=400');"></div>
+                        <div class="label">Salon Connecté</div>
+                    </div>
+                    <div class="tour-item">
+                        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=400');"></div>
+                        <div class="label">Cuisine Équipée</div>
+                    </div>
+                    <div class="tour-item">
+                        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=400');"></div>
+                        <div class="label">Terrasse Domotique</div>
+                    </div>
+                </div>
+                <div class="dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-section">
+            <h3>Découvrir les Alentours</h3>
+            <div class="search-bar">
+                <input type="text" placeholder="Rechercher...">
+                
+                <select class="filter">
+                    <option value="" disabled selected>Catégorie de Lieu</option>
+                    <option value="resto">Restaurants</option>
+                    <option value="shop">Supermarchés</option>
+                    <option value="elec">Bornes de Recharge</option>
+                </select>
+
+                <select class="filter">
+                    <option value="" disabled selected>Distance (depuis la maison)</option>
+                    <option value="500">&lt; 500m</option>
+                    <option value="1000">1km</option>
+                    <option value="5000">5km</option>
+                </select>
+
+                <button class="btn-search">Rechercher</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

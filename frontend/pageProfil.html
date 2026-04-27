@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Smart Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <span class="icon">🏠</span> <strong>Welcome & Stay</strong>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="#" class="active">Mon Profil</a></li>
+                <li><a href="#">Réglages</a></li>
+            </ul>
+        </nav>
+        <div class="user-badge">
+            <span>Jean Dupont</span>
+            <div class="avatar">JD</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="profile-header">
+            <div class="profile-info">
+                <h1>Bonjour, Jean</h1>
+                <p class="status-tag">Résident Principal • Structure Zéro Perte Activer</p>
+            </div>
+        </section>
+
+        <div class="profile-grid">
+            <section class="card stats-card">
+                <h3>État de la Structure</h3>
+                <div class="stat-item">
+                    <span>Efficacité Énergétique</span>
+                    <div class="progress-bar"><div class="progress" style="width: 98%;"></div></div>
+                    <span class="value">98%</span>
+                </div>
+                <div class="stat-item">
+                    <span>Consommation d'eau</span>
+                    <span class="value">Optimisée</span>
+                </div>
+                <div class="stat-item">
+                    <span>Déchets recyclés</span>
+                    <span class="value">100%</span>
+                </div>
+            </section>
+
+            <section class="card favorites-card">
+                <h3>Mes Lieux Favoris</h3>
+                <ul class="fav-list">
+                    <li>
+                        <span class="fav-icon">🍴</span>
+                        <div class="fav-text">
+                            <strong>Le Jardin Bio</strong>
+                            <p>Restaurant • 400m</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fav-icon">🚌</span>
+                        <div class="fav-text">
+                            <strong>Ligne B - Arrêt Mairie</strong>
+                            <p>Prochain passage : 4 min</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <section class="quick-access">
+            <h3>Commandes Rapides</h3>
+            <div class="actions-grid">
+                <button class="action-btn">Dévérouiller l'entrée</button>
+                <button class="action-btn">Mode Éco Max</button>
+                <button class="action-btn">Inviter un Visiteur</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

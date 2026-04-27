@@ -1,6 +1,8 @@
 /* 1. BASE STYLES & LAYOUT */
 .form-container {
+  width: 50em;
   max-width: 500px;
+  min-width: 170px;
   margin: 5%;
   padding: 3em 2em;
   background-color: var(--form-bg);
@@ -9,14 +11,14 @@
   box-shadow: 0 4px 12px var(--shadow-color);
 }
 
-.form-container label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: var(--text-color);
+.form-container .error {
+  color: var(--error-color);
+  margin-bottom: 5px;
+  margin-top: -9px;
+  text-align: left;
+  font-size: 0.8em;
 }
 
-/* 3. INPUT FIELDS STYLING */
 .form-container input,
 .form-container textarea {
   width: calc(100%);

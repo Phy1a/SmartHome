@@ -10,6 +10,7 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --error-color: red;
 
   /* Form variable */
   --form-bg: rgb(228, 223, 214);
@@ -48,6 +49,7 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
       rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --error-color: rgb(172, 10, 10);
 
     /* Form variable */
     --form-bg: #1010128d;

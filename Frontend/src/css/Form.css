@@ -3,12 +3,17 @@
   width: 50em;
   max-width: 500px;
   min-width: 170px;
-  margin: 5%;
-  padding: 3em 2em;
+  margin: 3rem auto; /* Centers the form vertically and horizontally */
+  padding: 2em;
   background-color: var(--form-bg);
   border-radius: 10%;
   /* Use the provided shadow variable */
   box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.form-container h2 {
+  margin-bottom: 1.5rem;
+  color: var(--text-h);
 }
 
 .form-container .error {

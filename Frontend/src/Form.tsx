@@ -18,16 +18,16 @@ export function Form(): JSX.Element {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <input
-          type="First name"
+          type="text"
           placeholder="First name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
 
         <input
-          type="Last name"
+          type="text"
           placeholder="Last name"
-          value={firstName}
+          value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
 
@@ -46,7 +46,7 @@ export function Form(): JSX.Element {
         />
 
         <input
-          type="password comfirmation"
+          type="password"
           placeholder="Mot de passe"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}

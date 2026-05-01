@@ -21,8 +21,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      //default page
-      { index: true, element: <Home /> },
+      { index: true, element: <Home /> }, //default page
       { path: "connexion", element: <Form /> },
     ],
   },

@@ -1,1 +1,5 @@
-com\domo\Main.class
+com\domo\app\Database.class
+com\domo\app\User.class
+com\domo\app\RegisterRequest.class
+com\domo\app\Main.class
+com\domo\app\UserDao.class

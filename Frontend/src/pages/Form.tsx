@@ -1,6 +1,7 @@
-import { useState, type JSX, type ChangeEvent, type SubmitEvent } from "react";
+import { useState, type JSX } from "react";
 
 import "../css/Form.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Form(): JSX.Element {
   // Form data
@@ -11,6 +12,8 @@ export default function Form(): JSX.Element {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -57,11 +60,12 @@ export default function Form(): JSX.Element {
     return newErrors;
   }
 
-  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const validationErrors = validate();
 
+    // Errors exist, display them and stop the submission
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -69,7 +73,44 @@ export default function Form(): JSX.Element {
 
     // everything is valid
     setErrors({});
-    console.log("Sent data:", formData);
+
+    const response = await fetch("http://localhost:7000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
+    }
+
+    console.log(data.message);
+
+    /*
+    This code uses React Router's navigation hook to programmatically 
+    redirect users to a different route in a Single Page Application (SPA).
+    The first line calls the `useNavigate()` hook, which is provided by React 
+    Router (typically version 6). This hook returns a function that can be 
+    used to navigate between routes programmatically — that is, in response 
+    to user actions or application logic rather than clicking a link. 
+    The result is stored in a constant named `navigateToHome`, 
+    though the variable name here is somewhat misleading since it's actually a function,
+    not the navigation result.
+
+    The second line invokes that function with `"/home"` as an argument, 
+    which tells React Router to change the current URL to `/home` and update
+    the displayed component accordingly. This is equivalent to the user clicking
+    a `<Link to="/home">` component, but gives you more control over when navigation
+    occurs — for example, after a form submission succeeds, after validating user 
+    input, or in response to a button click.
+    */
+
+    navigate("/"); //home
   }
 
   return (

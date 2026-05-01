@@ -69,12 +69,16 @@ public class Main {
 
             try {
                 User user = new User(request.firstName, request.lastName, request.email, request.password);
+                if (UserDao.getUserByEmail(user.email) != null) {
+                    ctx.status(400).json(Map.of("message", "Email already registered"));
+                    return;
+                }
                 UserDao.insertUser(user);
                 ctx.status(201).json(Map.of("message", "User registered"));
 
             } catch (Exception e) {
                 e.printStackTrace();
-                ctx.status(500).json("Database error");
+                ctx.status(500).json(Map.of("message", "Database error"));
             }
         });
     }

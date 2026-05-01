@@ -26,11 +26,11 @@ public class UserDao {
             /* 
             This code creates a JDBC `Statement` object from a database connection for 
             executing SQL queries. The `conn.createStatement()` method is called on a 
-            `Connection` object (typically obtained via JDBC driver manager) to obtain a 
-            `Statement` instance that can send SQL commands to the database.
+            `Connection` object to obtain a `Statement` instance that can send SQL 
+            commands to the database.
 
-            The closing parenthesis and brace at the end indicate this is the resource declaration portion
-            of a try-with-resources statement:
+            The closing parenthesis and brace at the end indicate this is the resource
+            declaration portion of a try-with-resources statement:
 
             ```java
             try (Statement stmt = conn.createStatement()) {
@@ -52,6 +52,39 @@ public class UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static User getUserByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        /*
+        This code prepares a SQL query to select a user by their email address.
+        It uses a PreparedStatement to safely insert the email parameter into the query,
+        preventing SQL injection attacks.
+
+        `stmt.executeQuery()` executes the SELECT statement and returns a `ResultSet` object,
+        which contains the rows returned by the database. The subsequent check `if (rs.next())`
+        advances the cursor to the first row — if a row exists, the email was found in the database;
+        if no row exists (the result is false), no user with that email is registered.
+        */
+        try (Connection conn = Database.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email); // replace the ? by the email parameter
+            var resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                return new User(
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getString("role")
+                );
+            } else {
+                return null;
+            }
         }
     }
 

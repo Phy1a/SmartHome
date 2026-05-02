@@ -4,14 +4,18 @@ import viteLogo from "./assets/vite.svg";
 import heroImg from "./assets/hero.png";
 import "./css/App.css";
 import { Form } from "./Form.tsx";
+import Formtest from "./components/Formtest.tsx";
+import Header from "./components/Header.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+    <Header></Header>
       <section id="center">
         <div className="hero">
+          
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
           <img src={viteLogo} className="vite" alt="Vite logo" />
@@ -28,8 +32,13 @@ function App() {
         >
           Count is {count}
         </button>
+
+        <Formtest></Formtest>
         <Form />
+
       </section>
+
+      
 
       <div className="ticks"></div>
 

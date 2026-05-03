@@ -3,6 +3,29 @@ import { useState, type JSX } from "react";
 import "../css/Form.css";
 import { useNavigate } from "react-router-dom";
 
+function AuthLayout({
+  children,
+  title,
+  subtitle,
+}: {
+  children: React.ReactNode;
+  title: string;
+  subtitle: string;
+}): JSX.Element {
+  return (
+    <div className="auth-layout">
+      <div className="auth-content">
+        <div className="auth-header">
+          <div className="auth-emoji">🏠</div>
+          <h1 className="auth-title">{title}</h1>
+          <p className="auth-subtitle">{subtitle}</p>
+        </div>
+        <div className="auth-form-container">{children}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function Form(): JSX.Element {
   // Form data
   const [formData, setFormData] = useState({
@@ -17,6 +40,18 @@ export default function Form(): JSX.Element {
   });
 
   const navigate = useNavigate();
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    memberType: "membre",
+    age: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -61,6 +96,8 @@ export default function Form(): JSX.Element {
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
+    setError("");
 
     const validationErrors = validate();
 

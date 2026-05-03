@@ -1,3 +1,48 @@
+/* AuthLayout styles */
+.auth-layout {
+  min-height: 100vh;
+  background: var(--night);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-layout .auth-content {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-layout .auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-layout .auth-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.auth-layout .auth-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.auth-layout .auth-subtitle {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+.auth-layout .auth-form-container {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+}
+
+
 /* 1. BASE STYLES & LAYOUT */
 .form-container {
   width: 50em;

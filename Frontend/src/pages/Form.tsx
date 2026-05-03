@@ -27,6 +27,11 @@ function AuthLayout({
 }
 
 export default function Form(): JSX.Element {
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [success, setSuccess] = useState<string | null>(null);
+  const [dbError, setDbError] = useState<string | null>(null);
+
   // Form data
   const [formData, setFormData] = useState({
     firstName: "",
@@ -38,22 +43,6 @@ export default function Form(): JSX.Element {
     member_type: "membre",
     age: "",
   });
-
-  const navigate = useNavigate();
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    memberType: "membre",
-    age: "",
-  });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     // refresh the form data value
@@ -96,8 +85,6 @@ export default function Form(): JSX.Element {
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoading(true);
-    setError("");
 
     const validationErrors = validate();
 
@@ -118,23 +105,48 @@ export default function Form(): JSX.Element {
       body: JSON.stringify(formData),
     });
 
-    console.log(JSON.stringify(formData));
     const data = await response.json();
 
-    console.log("test", data);
-
-    if (!response.ok) {
-      alert(data.error);
-      return;
+    if (response.ok) {
+      setSuccess(
+        "Inscription réussie ! Un administrateur doit valider votre compte avant votre première connexion."
+      );
+    } else {
+      setDbError(data?.error || "Erreur d'inscription");
     }
+  }
 
-    console.log(data.message);
-
-    navigate("/"); //home
+  if (success) {
+    return (
+      <AuthLayout title="Inscription" subtitle="Rejoignez SmartHome">
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
+          <h3 style={{ fontWeight: 700, marginBottom: 8 }}>
+            Inscription réussie !
+          </h3>
+          <p
+            style={{
+              color: "var(--text-secondary)",
+              fontSize: 14,
+              marginBottom: 24,
+            }}
+          >
+            {success}
+          </p>
+          <button className="btn-primary" onClick={() => navigate("/")}>
+            Retourner à la page d'accueil
+          </button>
+        </div>
+      </AuthLayout>
+    );
   }
 
   return (
-    <div>
+    <AuthLayout
+      title="Créer un compte"
+      subtitle="Rejoignez la maison connectée"
+    >
+      {dbError && <div className="error">❌ {dbError}</div>}
       <h2>Rejoindre le foyer</h2>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
@@ -258,6 +270,6 @@ export default function Form(): JSX.Element {
           </div>
         </form>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

@@ -19,7 +19,10 @@ public class AuthController {
         String lastName = (String) body.get("lastName");
         String memberType = (String) body.getOrDefault("memberType", "membre");
         Object ageObj = body.get("age");
-        int age = ageObj != null ? Integer.parseInt(ageObj.toString()) : 0;
+        int age = 0;
+        if (ageObj != null && !ageObj.toString().isBlank()) {
+            age = Integer.parseInt(ageObj.toString());
+        }
 
         if (username == null || email == null || password == null) {
             ctx.status(400).json(Map.of("error", "Champs requis manquants"));

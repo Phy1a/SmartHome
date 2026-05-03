@@ -17,6 +17,19 @@
   --danger-glow: rgba(255, 68, 102, 0.12);
   --purple: #a855f7;
   --purple-glow: rgba(168, 85, 247, 0.12);
+  --text: #6b6375;
+  --text-h: #08060d;
+  --text-secondary: #747271;
+  --bg: #ffffff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --error-color: red;
 
   --bg-base: #050c18;
   --bg-surface: #080f1f;
@@ -48,6 +61,7 @@
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
+    --text-secondary: #a8a29e;
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
@@ -60,7 +74,7 @@
     --error-color: rgb(172, 10, 10);
 
     /* Form variable */
-    --form-bg: #1010128d;
+    --form-bg: #101012cc;
     --form-border: rgba(72, 1, 78, 0.876);
     --element-bg: rgba(72, 1, 78, 0.409);
   }
@@ -71,7 +85,6 @@
 }
 
 #root {
-  width: 1126px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;

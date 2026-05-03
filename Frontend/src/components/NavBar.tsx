@@ -2,18 +2,17 @@ import React from "react";
 import "../css/NavBar.css";
 import { Link } from "react-router-dom";
 
-const NavBar: React.FC = () => {
+function NavBar() : React.JSX.Element{
   return (
     <nav>
       <ul>
         <li>
-          <Link to="">Home</Link>
+          <Link to="/">Home</Link>
         </li>
-        {/* <li><a href="#about">About</a></li> */}
+        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Home Sync</span>
         <li>
-          <Link to="connexion">Connexion</Link>
+          <Link to="/connexion">Connexion</Link>
         </li>
-        {/* <li><a href="#contact">Contact</a></li> */}
       </ul>
     </nav>
   );

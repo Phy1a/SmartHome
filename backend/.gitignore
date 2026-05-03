@@ -1,0 +1,4 @@
+# Ignore Maven target directory and compiled files
+Backend/target/
+*.class
+*.jar

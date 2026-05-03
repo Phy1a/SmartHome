@@ -1,5 +1,6 @@
-com\domo\app\Database.class
-com\domo\app\User.class
-com\domo\app\RegisterRequest.class
-com\domo\app\Main.class
-com\domo\app\UserDao.class
+com\smarthome\controllers\AdminController.class
+com\smarthome\controllers\AuthController.class
+com\smarthome\services\JwtService.class
+com\smarthome\database\DatabaseManager.class
+com\smarthome\Main.class
+com\smarthome\controllers\DeviceController.class

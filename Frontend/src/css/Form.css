@@ -24,11 +24,27 @@
   font-size: 0.8em;
 }
 
+.form-label {
+  display: block;
+  margin-bottom: 0.5em;
+  color: var(--text-color);
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.9em;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
 .form-container input,
-.form-container textarea {
+.form-container textarea,
+.form-container select {
   width: calc(100%);
   padding: 1em;
-  margin: 12px 0;
+  margin: 0.5px 0 2em 0;
   border: 1px solid var(--form-border);
   border-radius: 6px;
   box-sizing: border-box; /* Ensures padding doesn't enlarge the element */
@@ -39,7 +55,8 @@
 
 /* Focus State: Critical for accessibility and design polish */
 .form-container input:focus,
-.form-container textarea:focus {
+.form-container textarea:focus,
+.form-container select:focus {
   border-color: var(--form-border);
   /* Creates a subtle glow/ring using the background of the accent color */
   box-shadow: 0 0 0 3px var(--accent-bg);

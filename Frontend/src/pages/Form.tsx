@@ -8,9 +8,12 @@ export default function Form(): JSX.Element {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    member_type: "membre",
+    age: "",
   });
 
   const navigate = useNavigate();
@@ -30,12 +33,8 @@ export default function Form(): JSX.Element {
   function validate() {
     const newErrors: { [key: string]: string } = {};
 
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "Missing name";
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Missing name";
+    if (!formData.username.trim()) {
+      newErrors.username = "Missing username";
     }
 
     // Email
@@ -51,8 +50,8 @@ export default function Form(): JSX.Element {
     // Password
     if (!formData.password.trim()) {
       newErrors.password = "Missing password";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "6 caracters minimum";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "8 caracters minimum";
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.passwordConfirm = "Both password must be the same";
     }
@@ -74,7 +73,7 @@ export default function Form(): JSX.Element {
     // everything is valid
     setErrors({});
 
-    const response = await fetch("http://localhost:7000/api/register", {
+    const response = await fetch("http://localhost:8080/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,103 +81,146 @@ export default function Form(): JSX.Element {
       body: JSON.stringify(formData),
     });
 
+    console.log(JSON.stringify(formData));
     const data = await response.json();
 
+    console.log("test", data);
+
     if (!response.ok) {
-      alert(data.message);
+      alert(data.error);
       return;
     }
 
     console.log(data.message);
 
-    /*
-    This code uses React Router's navigation hook to programmatically 
-    redirect users to a different route in a Single Page Application (SPA).
-    The first line calls the `useNavigate()` hook, which is provided by React 
-    Router (typically version 6). This hook returns a function that can be 
-    used to navigate between routes programmatically — that is, in response 
-    to user actions or application logic rather than clicking a link. 
-    The result is stored in a constant named `navigateToHome`, 
-    though the variable name here is somewhat misleading since it's actually a function,
-    not the navigation result.
-
-    The second line invokes that function with `"/home"` as an argument, 
-    which tells React Router to change the current URL to `/home` and update
-    the displayed component accordingly. This is equivalent to the user clicking
-    a `<Link to="/home">` component, but gives you more control over when navigation
-    occurs — for example, after a form submission succeeds, after validating user 
-    input, or in response to a button click.
-    */
-
     navigate("/"); //home
   }
 
   return (
-    <div className="form-container">
-      <h2>Connexion</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-element">
-          <input
-            name="firstName"
-            type="text"
-            placeholder="First name"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-          {errors.firstName && <div className="error">{errors.firstName}</div>}
-        </div>
+    <div>
+      <h2>Rejoindre le foyer</h2>
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <div className="grid-2">
+            <div className="form-element">
+              <label className="form-label">Prénom</label>
+              <input
+                name="firstName"
+                type="text"
+                placeholder="Michel"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+              {errors.firstName && (
+                <div className="error">{errors.firstName}</div>
+              )}
+            </div>
 
-        <div className="form-element">
-          <input
-            name="lastName"
-            type="text"
-            placeholder="Last name"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-          {errors.lastName && <div className="error">{errors.lastName}</div>}
-        </div>
+            <div className="form-element">
+              <label className="form-label">Nom</label>
+              <input
+                name="lastName"
+                type="text"
+                placeholder="Dupont"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+              {errors.lastName && (
+                <div className="error">{errors.lastName}</div>
+              )}
+            </div>
+          </div>
 
-        <div className="form-element">
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {/* display the error if the key exists */}
-          {errors.email && <div className="error">{errors.email}</div>}
-        </div>
+          <div className="form-element">
+            <label className="form-label">Nom d'utilisateur *</label>
+            <input
+              name="username"
+              type="text"
+              placeholder="michel_dupont"
+              value={formData.username}
+              onChange={handleChange}
+            />
+            {errors.username && <div className="error">{errors.username}</div>}
+          </div>
 
-        <div className="form-element">
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && <div className="error">{errors.password}</div>}
-        </div>
+          <div className="form-element">
+            <label className="form-label">Email *</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="michel.dupont@example.com"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {/* display the error if the key exists */}
+            {errors.email && <div className="error">{errors.email}</div>}
+          </div>
 
-        <div className="form-element">
-          <input
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.passwordConfirm && (
-            <div className="error">{errors.passwordConfirm}</div>
-          )}
-        </div>
+          <div className="form-element">
+            <label className="form-label">
+              Mot de passe (8 caractères minimum) *
+            </label>
+            <input
+              name="password"
+              type="password"
+              placeholder="MonMotDePasse123!"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && <div className="error">{errors.password}</div>}
+          </div>
 
-        <div style={{ width: "100%" }}>
-          <button type="submit">Sign in</button>
-        </div>
-      </form>
+          <div className="form-element">
+            <label className="form-label">Confirmer le mot de passe *</label>
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="MonMotDePasse123!"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            {errors.passwordConfirm && (
+              <div className="error">{errors.passwordConfirm}</div>
+            )}
+          </div>
+
+          <div className="grid-2">
+            <div className="form-element">
+              <label className="form-label">Type</label>
+              <select
+                className="form-select"
+                value={formData.member_type}
+                onChange={(e) =>
+                  setFormData((f) => ({ ...f, memberType: e.target.value }))
+                }
+              >
+                <option value="père">Père</option>
+                <option value="mère">Mère</option>
+                <option value="enfant">Enfant</option>
+                <option value="membre">Autre</option>
+              </select>
+            </div>
+            <div className="form-element">
+              <label className="form-label">Âge</label>
+              <input
+                className="form-input"
+                type="number"
+                min="1"
+                max="120"
+                placeholder="18"
+                value={formData.age}
+                onChange={(e) =>
+                  setFormData((f) => ({ ...f, age: e.target.value }))
+                }
+              />
+            </div>
+          </div>
+
+          <div style={{ width: "100%" }}>
+            <button type="submit">S'inscrire</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

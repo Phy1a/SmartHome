@@ -3,6 +3,7 @@ import Applayout from "./pages/AppLayout";
 import Home from "./pages/Home";
 import { RegisterPage, LoginPage } from "./pages/AuthPages";
 import { AuthProvider } from "./hooks/useAuth";
+import PublicPage from "./pages/PublicPage";
 //import About from "./pages/About";
 //import Contact from "./pages/Contact";
 
@@ -33,17 +34,29 @@ function AppRoutes() {
           </Applayout>
         }
       />
+      <Route
+        path="/page-publique"
+        element={
+          <Applayout title="Connexion">
+            {" "}
+            <PublicPage></PublicPage>
+          </Applayout>
+        }
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+  );
   );
 }
 
 export default function App() {
   return (
     <BrowserRouter>
+      <AppRoutes />
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
     </BrowserRouter>
   );
 }
+

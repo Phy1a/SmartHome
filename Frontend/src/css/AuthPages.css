@@ -81,9 +81,9 @@
   gap: 12px;
 }
 
-.form-container input,
-.form-container textarea,
-.form-container select {
+.form-element input,
+.form-element textarea,
+.form-element select {
   width: calc(100%);
   padding: 1em;
   margin: 0.5px 0 2em 0;
@@ -96,9 +96,9 @@
 }
 
 /* Focus State: Critical for accessibility and design polish */
-.form-container input:focus,
-.form-container textarea:focus,
-.form-container select:focus {
+.form-element input:focus,
+.form-element textarea:focus,
+.form-element select:focus {
   border-color: var(--form-border);
   /* Creates a subtle glow/ring using the background of the accent color */
   box-shadow: 0 0 0 3px var(--accent-bg);
@@ -139,6 +139,8 @@
   border: none;
   border-radius: 6px;
   padding: 12px 20px;
+  align-self: center;
+  width: 50%;
   font-size: 16px;
   font-weight: 600;
   border: 1px solid var(--text-h);

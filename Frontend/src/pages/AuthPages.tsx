@@ -1,7 +1,8 @@
 import { useState, type JSX } from "react";
-
-import "../css/Form.css";
-import { useNavigate } from "react-router-dom";
+import "../css/AuthPages.css";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate, Link } from "react-router-dom";
+import { login as loginApi, register as registerApi } from "../utils/api";
 
 function AuthLayout({
   children,
@@ -26,11 +27,11 @@ function AuthLayout({
   );
 }
 
-export default function Form(): JSX.Element {
+export function RegisterPage(): JSX.Element {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [success, setSuccess] = useState<string | null>(null);
-  const [dbError, setDbError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Form data
   const [formData, setFormData] = useState({
@@ -40,7 +41,7 @@ export default function Form(): JSX.Element {
     email: "",
     password: "",
     confirmPassword: "",
-    member_type: "membre",
+    memberType: "membre",
     age: "",
   });
 
@@ -97,22 +98,13 @@ export default function Form(): JSX.Element {
     // everything is valid
     setErrors({});
 
-    const response = await fetch("http://localhost:8080/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
+    try {
+      await registerApi(formData);
       setSuccess(
         "Inscription réussie ! Un administrateur doit valider votre compte avant votre première connexion."
       );
-    } else {
-      setDbError(data?.error || "Erreur d'inscription");
+    } catch (err: any) {
+      setError(err.response?.data?.error || "Erreur d'inscription");
     }
   }
 
@@ -146,7 +138,7 @@ export default function Form(): JSX.Element {
       title="Créer un compte"
       subtitle="Rejoignez la maison connectée"
     >
-      {dbError && <div className="error">❌ {dbError}</div>}
+      {error && <div className="error">❌ {error}</div>}
       <h2>Rejoindre le foyer</h2>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
@@ -237,8 +229,7 @@ export default function Form(): JSX.Element {
             <div className="form-element">
               <label className="form-label">Type</label>
               <select
-                className="form-select"
-                value={formData.member_type}
+                value={formData.memberType}
                 onChange={(e) =>
                   setFormData((f) => ({ ...f, memberType: e.target.value }))
                 }
@@ -252,7 +243,6 @@ export default function Form(): JSX.Element {
             <div className="form-element">
               <label className="form-label">Âge</label>
               <input
-                className="form-input"
                 type="number"
                 min="1"
                 max="120"
@@ -265,10 +255,108 @@ export default function Form(): JSX.Element {
             </div>
           </div>
 
-          <div style={{ width: "100%" }}>
-            <button type="submit">S'inscrire</button>
-          </div>
+          <button type="submit">S'inscrire</button>
         </form>
+      </div>
+    </AuthLayout>
+  );
+}
+
+export function LoginPage() {
+  const navigate = useNavigate();
+  const { loginUser } = useAuth();
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const res = await loginApi(formData);
+      loginUser(res.data.token, res.data.user);
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError(err.response?.data?.error ?? "Identifiants incorrects");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <AuthLayout title="Connexion" subtitle="Bienvenue sur SmartHome">
+      {error && <div className="error">❌ {error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-container">
+          <div className="form-element">
+            <label className="form-label">Identifiant ou Email</label>
+            <input
+              className="form-input"
+              placeholder="admin"
+              value={formData.username}
+              onChange={(e) =>
+                setFormData((f) => ({ ...f, username: e.target.value }))
+              }
+              required
+            />
+          </div>
+          <div className="form-element">
+            <label className="form-label">Mot de passe</label>
+            <input
+              className="form-input"
+              type="password"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData((f) => ({ ...f, password: e.target.value }))
+              }
+              required
+            />
+          </div>
+          <button
+            className="btn-primary"
+            type="submit"
+            disabled={loading}
+            style={{ marginTop: 8 }}
+          >
+            {loading ? "..." : "Se connecter"}
+          </button>
+        </div>
+      </form>
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 20,
+          fontSize: 13,
+          color: "var(--text-secondary)",
+        }}
+      >
+        Pas encore de compte ?{" "}
+        <Link
+          to="/inscription"
+          style={{ color: "var(--primary)", fontWeight: 600 }}
+        >
+          S'inscrire
+        </Link>
+      </div>
+      <div
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: "var(--bg)",
+          borderRadius: 8,
+          fontSize: 12,
+          color: "var(--text-secondary)",
+        }}
+      >
+        <strong>Comptes de test :</strong>
+        <br />
+        admin / Admin123! (expert)
+        <br />
+        marie / Password123! (avancé)
+        <br />
+        lucas / Password123! (intermédiaire)
       </div>
     </AuthLayout>
   );

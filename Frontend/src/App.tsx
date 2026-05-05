@@ -46,13 +46,11 @@ function AppRoutes() {
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
-  );
 }
 
 export default function App() {
   return (
     <BrowserRouter>
-      <AppRoutes />
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
@@ -60,3 +58,6 @@ export default function App() {
   );
 }
 
+// export default function App() {
+//   return <h1>Test</h1>;
+// }

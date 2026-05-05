@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/index.css";
 import "../css/NavBar.css";
 import { Link } from "react-router-dom";
 
@@ -10,22 +11,14 @@ function NavBar(props: props): React.JSX.Element {
   return (
     <nav>
       <header className="topbar">
+        <span>Home Sync</span>
         <div className="topbar-title">{props.title}</div>
         <div className="topbar-actions">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
-              Home Sync
-            </span>
-            <li>
-              <Link to="/inscription">Inscription</Link>
-            </li>
-            <li>
-              <Link to="/connexion">Connexion</Link>
-            </li>
-          </ul>
+          <Link to="/">Home</Link>
+
+          <Link to="/inscription">Inscription</Link>
+
+          <Link to="/connexion">Connexion</Link>
         </div>
       </header>
     </nav>

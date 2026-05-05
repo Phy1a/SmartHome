@@ -59,7 +59,7 @@ export default function PublicPage() {
         >
           <button
             className="btn btn-primary btn-lg"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/connexion")}
           >
             Accéder à la plateforme →
           </button>
@@ -334,10 +334,10 @@ export default function PublicPage() {
                 Créez votre compte pour accéder à tous les services
               </div>
               <button
-                className="btn btn-primary"
-                onClick={() => navigate("/register")}
+                className="btn btn-primary btn-lg"
+                onClick={() => navigate("/inscription")}
               >
-                S'inscrire maintenant
+                <span>S'inscrire maintenant</span>
               </button>
             </div>
           </div>

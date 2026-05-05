@@ -14,7 +14,7 @@ function AppRoutes() {
         path="/"
         element={
           <Applayout title="Accueil">
-            <Home />
+            <PublicPage />
           </Applayout>
         }
       />

@@ -1,10 +1,6 @@
 nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
+  width: 100%;
   background: var(--bg);
-  color: var(--text);
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow);
 }
@@ -21,21 +17,15 @@ nav {
   color: var(--text-h);
 }
 
-nav ul {
-  display: flex;
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 /* Link element correspond to a in HTML */
 nav a {
   color: var(--text);
   text-decoration: none;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 nav a:hover,
@@ -73,4 +63,25 @@ nav a.active {
   .navbar__toggle {
     display: block;
   }
+}
+
+.topbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.topbar-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: center; /* important */
+}
+
+.topbar-actions {
+  display: flex;
+  justify-content: space-evenly; /* meilleur rendu */
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
 }

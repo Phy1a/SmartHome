@@ -1,3 +1,6 @@
+# SmartHome — Plateforme Maison Connectée
+Plateforme IoT intelligente pour maison connectée — Projet ING1 2025-2026.
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

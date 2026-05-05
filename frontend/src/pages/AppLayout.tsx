@@ -6,12 +6,11 @@ interface AppLayoutProps {
   title: string;
 }
 
-export default function AppLayout({ children, title } : AppLayoutProps) {
+export default function AppLayout({ children, title }: AppLayoutProps) {
   return (
     <div className="app-layout">
-
       <div className="main-content">
-      <Navbar />
+        <Navbar title={title} />
         <main className="page-wrapper">{children}</main>
       </div>
     </div>

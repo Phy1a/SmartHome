@@ -17,7 +17,6 @@ export default function PublicPage() {
     getNews()
       .then((r) => {
         setNews(r.data);
-        console.log("News bien récup", r.data);
       })
       .catch(() => {});
     getPublicMembers()
@@ -26,12 +25,12 @@ export default function PublicPage() {
   }, []); // useEffect with empty array to only use the API one time at the start of the page
 
   const filteredNews = news.filter(
-    (n) =>
+    (news: NewsItem) =>
       (!search || // if search is empty
-        n.title.toLowerCase().includes(search.toLowerCase()) || // check if string of title is contained in the search
-        n.content.toLowerCase().includes(search.toLowerCase())) &&
+        news.title.toLowerCase().includes(search.toLowerCase()) || // check if string of title is contained in the search
+        news.content.toLowerCase().includes(search.toLowerCase())) &&
       (!filterCat || //checks is empty
-        n.category === filterCat),
+        news.category === filterCat),
   );
 
   const categories = [...new Set(news.map((n) => n.category))]; // set is used to not have doubloons
@@ -60,7 +59,7 @@ export default function PublicPage() {
         >
           <button
             className="btn btn-primary btn-lg"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/connexion")}
           >
             Accéder à la plateforme →
           </button>
@@ -155,7 +154,6 @@ export default function PublicPage() {
             Actualités et membres de la communauté SmartHome
           </p>
 
-          {/* TABS */}
           <div
             style={{
               display: "flex",
@@ -336,10 +334,10 @@ export default function PublicPage() {
                 Créez votre compte pour accéder à tous les services
               </div>
               <button
-                className="btn btn-primary"
-                onClick={() => navigate("/register")}
+                className="btn btn-primary btn-lg"
+                onClick={() => navigate("/inscription")}
               >
-                S'inscrire maintenant
+                <span>S'inscrire maintenant</span>
               </button>
             </div>
           </div>

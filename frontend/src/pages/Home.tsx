@@ -40,13 +40,13 @@ export default function Home() {
           <p>Your questions, answered</p>
           <ul>
             <li>
-              <a to="https://vite.dev/" target="_blank">
+              <a href="https://vite.dev/" target="_blank">
                 <img className="logo" src={viteLogo} alt="" />
                 Explore Vite
               </a>
             </li>
             <li>
-              <a to="https://react.dev/" target="_blank">
+              <a href="https://react.dev/" target="_blank">
                 <img className="button-icon" src={reactLogo} alt="" />
                 Learn more
               </a>
@@ -61,7 +61,7 @@ export default function Home() {
           <p>Join the Vite community</p>
           <ul>
             <li>
-              <a to="https://github.com/vitejs/vite" target="_blank">
+              <a href="https://github.com/vitejs/vite" target="_blank">
                 <svg
                   className="button-icon"
                   role="presentation"
@@ -73,7 +73,7 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a to="https://chat.vite.dev/" target="_blank">
+              <a href="https://chat.vite.dev/" target="_blank">
                 <svg
                   className="button-icon"
                   role="presentation"
@@ -85,7 +85,7 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a to="https://x.com/vite_js" target="_blank">
+              <a href="https://x.com/vite_js" target="_blank">
                 <svg
                   className="button-icon"
                   role="presentation"
@@ -97,7 +97,7 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a to="https://bsky.app/profile/vite.dev" target="_blank">
+              <a href="https://bsky.app/profile/vite.dev" target="_blank">
                 <svg
                   className="button-icon"
                   role="presentation"

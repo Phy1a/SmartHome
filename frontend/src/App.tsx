@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import { RegisterPage, LoginPage } from "./pages/AuthPages";
 import { AuthProvider } from "./hooks/useAuth";
 import PublicPage from "./pages/PublicPage";
+import ProfilePage from "./pages/ProfilePage";
 //import About from "./pages/About";
 //import Contact from "./pages/Contact";
 
@@ -37,9 +38,16 @@ function AppRoutes() {
       <Route
         path="/page-publique"
         element={
-          <Applayout title="Connexion">
-            {" "}
+          <Applayout title="Bienvenue">
             <PublicPage></PublicPage>
+          </Applayout>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <Applayout title="Profile">
+            <ProfilePage></ProfilePage>
           </Applayout>
         }
       />

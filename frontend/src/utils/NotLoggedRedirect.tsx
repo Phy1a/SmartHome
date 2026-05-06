@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/index.css";
 import "../css/NavBar.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 interface RedirectProps {

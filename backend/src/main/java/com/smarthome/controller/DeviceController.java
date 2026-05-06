@@ -93,18 +93,19 @@ public class DeviceController {
             ResultSet dataRs = dataPs.executeQuery();
             List<Map<String, Object>> history = new ArrayList<>();
             while (dataRs.next()) {
-                history.add(Map.of(
-                    "type", dataRs.getString("data_type"),
-                    "value", dataRs.getDouble("value"),
-                    "unit", dataRs.getString("unit") != null ? dataRs.getString("unit") : "",
-                    "recordedAt", dataRs.getString("recorded_at")
-                ));
+                Map<String, Object> entry = new java.util.HashMap<>();
+                entry.put("type", dataRs.getString("data_type") != null ? dataRs.getString("data_type") : "");
+                entry.put("value", dataRs.getDouble("value"));
+                entry.put("unit", dataRs.getString("unit") != null ? dataRs.getString("unit") : "");
+                entry.put("recordedAt", dataRs.getString("recorded_at") != null ? dataRs.getString("recorded_at") : "");
+                history.add(entry);
             }
             device.put("history", history);
 
             ctx.json(device);
-        } catch (SQLException e) {
-            ctx.status(500).json(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            ctx.status(500).json(Map.of("error", e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName()));
         }
     }
 

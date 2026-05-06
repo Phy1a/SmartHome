@@ -15,7 +15,7 @@ function AppRoutes() {
         path="/"
         element={
           <Applayout title="Accueil">
-            <PublicPage />
+            <PublicPage/>
           </Applayout>
         }
       />
@@ -23,7 +23,7 @@ function AppRoutes() {
         path="/connexion"
         element={
           <Applayout title="Connexion">
-            <LoginPage />
+            <LoginPage/>
           </Applayout>
         }
       />

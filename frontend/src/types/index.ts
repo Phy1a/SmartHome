@@ -21,7 +21,7 @@ export interface User {
   lastLogin?: string;
 }
 
-export type Level = "débutant" | "intermédiaire" | "avancé" | "expert";
+export type Level = 'débutant' | 'intermédiaire' | 'avancé' | 'expert';
 
 export interface Device {
   id: number;
@@ -31,14 +31,13 @@ export interface Device {
   type: string;
   brand?: string;
   room?: string;
-  status: "actif" | "inactif";
+  status: 'actif' | 'inactif';
   connectivity?: string;
   signalStrength?: string;
   batteryLevel: number;
   energyConsumption: number;
   lastInteraction?: string;
   createdAt?: string;
-  // For extensibility, we can store additional attributes in a flexible way
   attributes: Record<string, string>;
   history?: DeviceDataPoint[];
 }
@@ -71,7 +70,7 @@ export interface Alert {
   deviceName?: string;
   type: string;
   message: string;
-  severity: "info" | "warning" | "critical";
+  severity: 'info' | 'warning' | 'critical';
   isRead: boolean;
   createdAt: string;
 }
@@ -173,7 +172,7 @@ export interface DeviceFilters {
 export interface Toast {
   id: number;
   message: string;
-  type: "success" | "error" | "warning";
+  type: 'success' | 'error' | 'warning';
 }
 
 // ===== AUTH CONTEXT =====

@@ -183,7 +183,10 @@ export default function DeviceDetailPage() {
     setLoading(true);
     getDevice(id!)
       .then(r => setDevice(r.data))
-      .catch(() => navigate('/devices'))
+      .catch((err) => {
+        console.error('Erreur chargement appareil:', err);
+        toast.error(err.response?.data?.error || 'Impossible de charger cet appareil');
+      })
       .finally(() => setLoading(false));
   };
 

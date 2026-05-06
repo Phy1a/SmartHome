@@ -203,21 +203,28 @@ function AdvancedDashboard({ user, stats, alerts, navigate, toast }: AdvancedDas
           <div className="card-title">⚡ Contrôle rapide des appareils</div>
           <button className="btn btn-ghost btn-sm" onClick={() => navigate('/devices')}>Voir tout →</button>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 240px))', gap: 12 }}>
           {devices.map((d: Device) => (
             <div key={d.id} style={{
               background: d.status === 'actif' ? 'rgba(16,185,129,0.06)' : 'rgba(239,68,68,0.04)',
               border: `1px solid ${d.status === 'actif' ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.15)'}`,
-              borderRadius: 12, padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10
+              borderRadius: 12, padding: '12px 14px',
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between', gap: 8,
+              width: '100%', boxSizing: 'border-box' as const,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 22 }}>{getDeviceIcon(d.type)}</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, maxWidth: 110, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.name}</div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{d.room || d.type}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, flex: 1 }}>
+                <span style={{ fontSize: 20, flexShrink: 0 }}>{getDeviceIcon(d.type)}</span>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{
+                    fontSize: 12, fontWeight: 600,
+                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                  }}>{d.name}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{d.room || d.type}</div>
                 </div>
               </div>
-              <label className="toggle" title={d.status === 'actif' ? 'Désactiver' : 'Activer'}>
+              <label className="toggle" title={d.status === 'actif' ? 'Désactiver' : 'Activer'}
+                style={{ flexShrink: 0, marginLeft: 4 }}>
                 <input type="checkbox" checked={d.status === 'actif'} disabled={toggling === d.id} onChange={() => handleToggle(d)} />
                 <span className="toggle-slider" />
               </label>

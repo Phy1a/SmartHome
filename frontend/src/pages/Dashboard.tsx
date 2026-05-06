@@ -20,6 +20,7 @@ import { useAuth } from "../hooks/useAuth";
 import { getDeviceIcon } from "../utils/helpers";
 import { useToast, ToastContainer } from "../hooks/useToast";
 import type { User, Device, DeviceStats, Alert } from "../types";
+import '../index.css';
 import '../css/DashBoard.css';
 
 interface LvlInfo {

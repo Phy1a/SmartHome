@@ -1,40 +1,59 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import Applayout from "./pages/AppLayout";
-import Home from "./pages/Home";
 import { RegisterPage, LoginPage } from "./pages/AuthPages";
-import { AuthProvider } from "./hooks/useAuth";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
 import PublicPage from "./pages/PublicPage";
 import ProfilePage from "./pages/ProfilePage";
+import Dashboard from "./pages/Dashboard";
+import NotLoggedRedirect from "./utils/NotLoggedRedirect";
 //import About from "./pages/About";
 //import Contact from "./pages/Contact";
 
 function AppRoutes() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
   return (
     <Routes>
       <Route
         path="/"
         element={
           <Applayout title="Accueil">
-            <PublicPage/>
+            {!user ? <PublicPage /> : <Dashboard></Dashboard>}
           </Applayout>
         }
       />
       <Route
         path="/connexion"
         element={
-          <Applayout title="Connexion">
-            <LoginPage/>
-          </Applayout>
+          !user ? ( // stop the user to access log in page if he is already connected
+            <Applayout title="Connexion">
+              <LoginPage />
+            </Applayout>
+          ) : (
+            <Navigate to={"/"}></Navigate>
+          )
         }
       />
       <Route
         path="/inscription"
         element={
-          <Applayout title="Inscription">
-            <RegisterPage />
-          </Applayout>
+          !user ? ( // stop the user to access log in page if he is already connected
+            <Applayout title="Inscription">
+              <RegisterPage />
+            </Applayout>
+          ) : (
+            <Navigate to={"/"}></Navigate>
+          )
         }
       />
+
       <Route
         path="/page-publique"
         element={
@@ -43,11 +62,14 @@ function AppRoutes() {
           </Applayout>
         }
       />
+
       <Route
         path="/profile"
         element={
           <Applayout title="Profile">
-            <ProfilePage></ProfilePage>
+            <NotLoggedRedirect>
+              <ProfilePage></ProfilePage>
+            </NotLoggedRedirect>
           </Applayout>
         }
       />

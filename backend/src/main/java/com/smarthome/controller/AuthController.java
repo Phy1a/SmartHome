@@ -19,10 +19,7 @@ public class AuthController {
         String lastName = (String) body.get("lastName");
         String memberType = (String) body.getOrDefault("memberType", "membre");
         Object ageObj = body.get("age");
-        int age = 0;
-        if (ageObj != null && !ageObj.toString().isBlank()) {
-            age = Integer.parseInt(ageObj.toString());
-        }
+        int age = ageObj != null ? Integer.parseInt(ageObj.toString()) : 0;
 
         if (username == null || email == null || password == null) {
             ctx.status(400).json(Map.of("error", "Champs requis manquants"));
@@ -120,16 +117,13 @@ public class AuthController {
             logLogin.setInt(1, userId);
             logLogin.executeUpdate();
 
-            // Re-fetch updated points and check level upgrade
-            PreparedStatement fetchUpdated = conn.prepareStatement("SELECT points FROM users WHERE id=?");
+            // Re-fetch updated points (le niveau NE change PAS automatiquement,
+            // l'utilisateur doit choisir manuellement de monter de niveau)
+            PreparedStatement fetchUpdated = conn.prepareStatement("SELECT points, level FROM users WHERE id=?");
             fetchUpdated.setInt(1, userId);
             ResultSet updatedRs = fetchUpdated.executeQuery();
             double newPoints = updatedRs.getDouble("points");
-            level = computeLevel(newPoints);
-            PreparedStatement updateLevel = conn.prepareStatement("UPDATE users SET level=? WHERE id=?");
-            updateLevel.setString(1, level);
-            updateLevel.setInt(2, userId);
-            updateLevel.executeUpdate();
+            level = updatedRs.getString("level"); // on garde le niveau actuel
 
             String token = JwtService.generateToken(userId, rs.getString("username"), level);
 
@@ -209,7 +203,12 @@ public class AuthController {
             ps.setString(1, (String) body.getOrDefault("firstName", ""));
             ps.setString(2, (String) body.getOrDefault("lastName", ""));
             Object ageObj = body.get("age");
-            ps.setInt(3, ageObj != null ? Integer.parseInt(ageObj.toString()) : 0);
+            int ageVal = 0;
+            if (ageObj != null && !ageObj.toString().isBlank()) {
+                try { ageVal = Integer.parseInt(ageObj.toString().trim()); }
+                catch (NumberFormatException nfe) { ageVal = 0; }
+            }
+            ps.setInt(3, ageVal);
             ps.setString(4, (String) body.getOrDefault("gender", ""));
             ps.setString(5, (String) body.getOrDefault("birthDate", ""));
             ps.setString(6, (String) body.getOrDefault("memberType", "membre"));
@@ -228,6 +227,28 @@ public class AuthController {
             }
 
             ctx.json(Map.of("message", "Profil mis à jour"));
+        } catch (Exception e) {
+            ctx.status(500).json(Map.of("error", e.getMessage()));
+        }
+    }
+
+
+    public void getPoints(Context ctx) {
+        String auth = ctx.header("Authorization");
+        if (auth == null || !auth.startsWith("Bearer ")) { ctx.status(401).json(Map.of("error", "Non authentifié")); return; }
+        Integer userId = JwtService.getUserId(auth.substring(7));
+        if (userId == null) { ctx.status(401).json(Map.of("error", "Token invalide")); return; }
+        try (Connection conn = DatabaseManager.getInstance().getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT points, level, action_count, login_count FROM users WHERE id=?");
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) { ctx.status(404).json(Map.of("error", "Introuvable")); return; }
+            ctx.json(Map.of(
+                "points", rs.getDouble("points"),
+                "level", rs.getString("level"),
+                "actionCount", rs.getInt("action_count"),
+                "loginCount", rs.getInt("login_count")
+            ));
         } catch (SQLException e) {
             ctx.status(500).json(Map.of("error", e.getMessage()));
         }

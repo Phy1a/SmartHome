@@ -17,7 +17,7 @@ const LEVEL_POINTS = {
 const LEVELS = ["débutant", "intermédiaire", "avancé", "expert"];
 
 export default function ProfilePage() {
-  const { user, setUser } = useAuth();
+  const { user, logout, setUser } = useAuth();
   const { toasts, toast } = useToast();
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({
@@ -543,6 +543,30 @@ export default function ProfilePage() {
                       ••••••••
                     </div>
                   </div>
+                  <button
+                    className="btn btn-sm"
+                    onClick={logout}
+                    title="Déconnexion"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "var(--text-muted)",
+                      cursor: "pointer",
+                      fontSize: 16,
+                      padding: 4,
+                      transition: "color 0.2s",
+                      justifyContent: "center",
+                      textAlign: "center",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color = "var(--danger)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color = "var(--text-muted)")
+                    }
+                  >
+                    Se déconnecter
+                  </button>
                 </div>
               )}
             </div>

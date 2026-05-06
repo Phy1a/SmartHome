@@ -19,18 +19,19 @@ function NavBar(props: props): React.JSX.Element {
         <div className="topbar-actions">
           <Link to="/">Home</Link>
 
-          <Link to="/inscription">Inscription</Link>
-
-          <Link to="/connexion">Connexion</Link>
+          {!user && <Link to="/inscription">Inscription</Link>}
+          {!user && <Link to="/connexion">Connexion</Link>}
 
           <button
-            onClick={() => navigate("/profile")}
+            onClick={() => {
+              if (user) navigate("/profile");
+            }}
             className="user-avatar btn btn-sm"
             style={{
               fontSize: 18,
             }}
           >
-            {user?.username?.[0]?.toUpperCase()}
+            {user ? user?.username?.[0]?.toUpperCase() : "?"}
           </button>
         </div>
       </header>

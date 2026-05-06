@@ -1,11 +1,10 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import type { ReactNode } from "react";
-import { getMe } from "../utils/api";
-import type { User, Level, AuthContextType } from "../types";
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { getMe } from '../utils/api';
+import type { User, Level, AuthContextType } from '../types';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const LEVELS: Level[] = ["débutant", "intermédiaire", "avancé", "expert"];
+const LEVELS: Level[] = ['débutant', 'intermédiaire', 'avancé', 'expert'];
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -16,12 +15,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       getMe()
-        .then((res: { data: User }) => setUser(res.data))
+        .then(res => setUser(res.data))
         .catch(() => {
-          localStorage.removeItem("token");
+          localStorage.removeItem('token');
           setUser(null);
         })
         .finally(() => setLoading(false));
@@ -31,16 +30,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const loginUser = (token: string, userData: User): void => {
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
     setUser(userData);
   };
 
   const logout = (): void => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setUser(null);
   };
 
-  const getLevel = (): Level => (user?.level as Level) ?? "débutant";
+  const getLevel = (): Level => (user?.level as Level) ?? 'débutant';
 
   const canAccess = (minLevel: Level): boolean => {
     const userIdx = LEVELS.indexOf(getLevel());
@@ -49,9 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, setUser, loading, loginUser, logout, canAccess, getLevel }}
-    >
+    <AuthContext.Provider value={{ user, setUser, loading, loginUser, logout, canAccess, getLevel }}>
       {children}
     </AuthContext.Provider>
   );
@@ -59,6 +56,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 export function useAuth(): AuthContextType {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
+  if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
   return ctx;
 }

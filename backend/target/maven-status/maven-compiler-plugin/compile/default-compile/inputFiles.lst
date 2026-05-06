@@ -1,1 +1,6 @@
-C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\domo\Main.java
+C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\smarthome\controller\AuthController.java
+C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\smarthome\services\JwtService.java
+C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\smarthome\controller\AdminController.java
+C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\smarthome\controller\DeviceController.java
+C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\smarthome\Main.java
+C:\Users\PC\Documents\GitHub\Smart-Basement-Management\Backend\src\main\java\com\smarthome\database\DatabaseManager.java

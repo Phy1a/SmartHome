@@ -1,1 +1,6 @@
-com\domo\Main.class
+com\smarthome\controllers\AdminController.class
+com\smarthome\controllers\AuthController.class
+com\smarthome\services\JwtService.class
+com\smarthome\database\DatabaseManager.class
+com\smarthome\Main.class
+com\smarthome\controllers\DeviceController.class

@@ -1,0 +1,150 @@
+/* AuthLayout styles */
+.auth-layout {
+  min-height: 100vh;
+  background-color: rgba(42, 22, 48, 0.969);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-layout .auth-content {
+  width: 100%;
+}
+
+.auth-layout .auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-layout .auth-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.auth-layout .auth-title {
+  color: var(--text-h);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.auth-layout .auth-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.auth-layout .auth-form-container {
+  border-radius: 20px;
+  padding: 32px;
+  /* box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3); */
+}
+
+/* 1. BASE STYLES & LAYOUT */
+.form-container {
+  width: 50em;
+  max-width: 500px;
+  min-width: 170px;
+  margin: 3rem auto; /* Centers the form vertically and horizontally */
+  padding: 2em;
+  background-color: var(--form-bg);
+  border-radius: 10%;
+  /* Use the provided shadow variable */
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.form-container h2 {
+  margin-bottom: 1.5rem;
+  color: var(--text-h);
+}
+
+.form-container .error {
+  color: var(--error-color);
+  margin-bottom: 5px;
+  margin-top: -9px;
+  text-align: left;
+  font-size: 0.8em;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5em;
+  color: var(--text-color);
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.9em;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.form-element input,
+.form-element textarea,
+.form-element select {
+  width: calc(100%);
+  padding: 1em;
+  margin: 0.5px 0 2em 0;
+  border: 1px solid var(--form-border);
+  border-radius: 6px;
+  box-sizing: border-box; /* Ensures padding doesn't enlarge the element */
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: var(--element-bg);
+  color: var(--text-color);
+}
+
+/* Focus State: Critical for accessibility and design polish */
+.form-element input:focus,
+.form-element textarea:focus,
+.form-element select:focus {
+  border-color: var(--form-border);
+  /* Creates a subtle glow/ring using the background of the accent color */
+  box-shadow: 0 0 0 3px var(--accent-bg);
+  outline: none; /* Removes default browser focus outline */
+}
+
+/* 4. BUTTON STYLING */
+.form-container button[type="submit"] {
+  padding: 12px;
+  margin-top: 10px;
+  background-color: var(--element-bg);
+  color: var(--text-h);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+/* Button Hover State */
+.form-container button[type="submit"]:hover {
+  /* Slightly darken the accent color on hover for better feedback */
+  background-color: color-mix(in srgb, var(--accent-color) 90%, black);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Active/Click State */
+.form-container button[type="submit"]:active {
+  transform: translateY(1px); /* Gives a physical "press" effect */
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: var(--text-h);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  align-self: center;
+  width: 50%;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid var(--text-h);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}

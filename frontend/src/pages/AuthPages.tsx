@@ -1,362 +1,149 @@
-import { useState, type JSX } from "react";
-import "../css/AuthPages.css";
-import { useAuth } from "../hooks/useAuth";
-import { useNavigate, Link } from "react-router-dom";
-import { login as loginApi, register as registerApi } from "../utils/api";
+import { useState, FormEvent } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { login as loginApi, register as registerApi } from '../utils/api';
+import { useAuth } from '../hooks/useAuth';
+import type { LoginForm, RegisterForm } from '../types';
 
-function AuthLayout({
-  children,
-  title,
-  subtitle,
-}: {
+interface AuthLayoutProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
-}): JSX.Element {
-  return (
-    <div className="auth-layout">
-      <div className="auth-content">
-        <div className="auth-header">
-          <div className="auth-emoji">🏠</div>
-          <h1 className="auth-title">{title}</h1>
-          <p className="auth-subtitle">{subtitle}</p>
-        </div>
-        <div className="auth-form-container">{children}</div>
-      </div>
-    </div>
-  );
 }
 
-export function RegisterPage(): JSX.Element {
-  const navigate = useNavigate();
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [success, setSuccess] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  // Form data
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    memberType: "membre",
-    age: "",
-  });
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // refresh the form data value
-    const { name, value } = event.target;
-
-    setFormData((prev) => ({
-      ...prev, // spread operator, useful to not overide the other values
-      [name]: value, //dictionary, name is the key
-    }));
-  }
-
-  function validate() {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!formData.username.trim()) {
-      newErrors.username = "Missing username";
-    }
-
-    // Email
-    if (!formData.email.trim()) {
-      newErrors.email = "Missing email";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      // text@text.text
-      newErrors.email = "Invalid email format";
-    } else if (/[<>()[\]\\,;:\s"']/.test(formData.email)) {
-      newErrors.email = "Email contains forbidden characters";
-    }
-
-    // Password
-    if (!formData.password.trim()) {
-      newErrors.password = "Missing password";
-    } else if (formData.password.length < 8) {
-      newErrors.password = "8 caracters minimum";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.passwordConfirm = "Both password must be the same";
-    }
-
-    return newErrors;
-  }
-
-  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const validationErrors = validate();
-
-    // Errors exist, display them and stop the submission
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    // everything is valid
-    setErrors({});
-
-    try {
-      await registerApi(formData);
-      setSuccess(
-        "Inscription réussie ! Un administrateur doit valider votre compte avant votre première connexion."
-      );
-    } catch (err: any) {
-      setError(err.response?.data?.error || "Erreur d'inscription");
-    }
-  }
-
-  if (success) {
-    return (
-      <AuthLayout title="Inscription" subtitle="Rejoignez SmartHome">
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
-          <h3 style={{ fontWeight: 700, marginBottom: 8 }}>
-            Inscription réussie !
-          </h3>
-          <p
-            style={{
-              color: "var(--text-secondary)",
-              fontSize: 14,
-              marginBottom: 24,
-            }}
-          >
-            {success}
-          </p>
-          <button className="btn-primary" onClick={() => navigate("/")}>
-            Retourner à la page d'accueil
-          </button>
-        </div>
-      </AuthLayout>
-    );
-  }
-
+function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
   return (
-    <AuthLayout
-      title="Créer un compte"
-      subtitle="Rejoignez la maison connectée"
-    >
-      {error && <div className="error">❌ {error}</div>}
-      <h2>Rejoindre le foyer</h2>
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <div className="grid-2">
-            <div className="form-element">
-              <label className="form-label">Prénom</label>
-              <input
-                name="firstName"
-                type="text"
-                placeholder="Michel"
-                value={formData.firstName}
-                onChange={handleChange}
-              />
-              {errors.firstName && (
-                <div className="error">{errors.firstName}</div>
-              )}
-            </div>
-
-            <div className="form-element">
-              <label className="form-label">Nom</label>
-              <input
-                name="lastName"
-                type="text"
-                placeholder="Dupont"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-              {errors.lastName && (
-                <div className="error">{errors.lastName}</div>
-              )}
-            </div>
+    <div style={{
+      minHeight: '100vh', background: 'var(--bg-base)',
+      backgroundImage: 'radial-gradient(ellipse at 30% 40%, rgba(0,212,255,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 70%, rgba(168,85,247,0.04) 0%, transparent 50%)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20
+    }}>
+      <div style={{ width: '100%', maxWidth: 420 }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{ fontSize: 36, marginBottom: 10 }}>🏠</div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.2)', padding: '4px 14px', borderRadius: 99, marginBottom: 16 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 8px var(--primary)', display: 'inline-block' }} />
+            <span style={{ fontSize: 10, color: 'var(--primary)', fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>SmartHome System</span>
           </div>
-
-          <div className="form-element">
-            <label className="form-label">Nom d'utilisateur *</label>
-            <input
-              name="username"
-              type="text"
-              placeholder="michel_dupont"
-              value={formData.username}
-              onChange={handleChange}
-            />
-            {errors.username && <div className="error">{errors.username}</div>}
-          </div>
-
-          <div className="form-element">
-            <label className="form-label">Email *</label>
-            <input
-              name="email"
-              type="email"
-              placeholder="michel.dupont@example.com"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            {/* display the error if the key exists */}
-            {errors.email && <div className="error">{errors.email}</div>}
-          </div>
-
-          <div className="form-element">
-            <label className="form-label">
-              Mot de passe (8 caractères minimum) *
-            </label>
-            <input
-              name="password"
-              type="password"
-              placeholder="MonMotDePasse123!"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            {errors.password && <div className="error">{errors.password}</div>}
-          </div>
-
-          <div className="form-element">
-            <label className="form-label">Confirmer le mot de passe *</label>
-            <input
-              name="confirmPassword"
-              type="password"
-              placeholder="MonMotDePasse123!"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-            {errors.passwordConfirm && (
-              <div className="error">{errors.passwordConfirm}</div>
-            )}
-          </div>
-
-          <div className="grid-2">
-            <div className="form-element">
-              <label className="form-label">Type</label>
-              <select
-                value={formData.memberType}
-                onChange={(e) =>
-                  setFormData((f) => ({ ...f, memberType: e.target.value }))
-                }
-              >
-                <option value="père">Père</option>
-                <option value="mère">Mère</option>
-                <option value="enfant">Enfant</option>
-                <option value="membre">Autre</option>
-              </select>
-            </div>
-            <div className="form-element">
-              <label className="form-label">Âge</label>
-              <input
-                type="number"
-                min="1"
-                max="120"
-                placeholder="18"
-                value={formData.age}
-                onChange={(e) =>
-                  setFormData((f) => ({ ...f, age: e.target.value }))
-                }
-              />
-            </div>
-          </div>
-
-          <button type="submit">S'inscrire</button>
-        </form>
+          <h1 style={{ color: 'var(--text-primary)', fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: 0.5 }}>{title}</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>{subtitle}</p>
+        </div>
+        <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,212,255,0.15)', borderRadius: 12, padding: 28, boxShadow: '0 24px 64px rgba(0,0,0,0.5), 0 0 40px rgba(0,212,255,0.05)' }}>
+          {children}
+        </div>
       </div>
-    </AuthLayout>
+    </div>
   );
 }
 
 export function LoginPage() {
   const navigate = useNavigate();
   const { loginUser } = useAuth();
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const [error, setError] = useState<string>("");
+  const [form, setForm] = useState<LoginForm>({ username: '', password: '' });
+  const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
+    setLoading(true); setError('');
     try {
-      const res = await loginApi(formData);
+      const res = await loginApi(form);
       loginUser(res.data.token, res.data.user);
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.error ?? "Identifiants incorrects");
-    } finally {
-      setLoading(false);
-    }
+      setError(err.response?.data?.error ?? 'Identifiants incorrects');
+    } finally { setLoading(false); }
   };
 
   return (
-    <AuthLayout title="Connexion" subtitle="Bienvenue sur SmartHome">
-      {error && <div className="error">❌ {error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-container">
-          <div className="form-element">
-            <label className="form-label">Identifiant ou Email</label>
-            <input
-              className="form-input"
-              placeholder="admin"
-              value={formData.username}
-              onChange={(e) =>
-                setFormData((f) => ({ ...f, username: e.target.value }))
-              }
-              required
-            />
-          </div>
-          <div className="form-element">
-            <label className="form-label">Mot de passe</label>
-            <input
-              className="form-input"
-              type="password"
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData((f) => ({ ...f, password: e.target.value }))
-              }
-              required
-            />
-          </div>
-          <button
-            className="btn-primary"
-            type="submit"
-            disabled={loading}
-            style={{ marginTop: 8 }}
-          >
-            {loading ? "..." : "Se connecter"}
-          </button>
+    <AuthLayout title="Authentification" subtitle="Accès sécurisé à la plateforme">
+      {error && (
+        <div style={{ background: 'rgba(255,68,102,0.08)', border: '1px solid rgba(255,68,102,0.25)', borderLeft: '3px solid var(--danger)', borderRadius: 6, padding: '9px 12px', marginBottom: 16, fontSize: 13, color: 'var(--danger)', display: 'flex', alignItems: 'center', gap: 8 }}>
+          ⚠ {error}
         </div>
+      )}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label">Identifiant ou email</label>
+          <input className="form-input" placeholder="admin" value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))} required />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Mot de passe</label>
+          <input className="form-input" type="password" placeholder="••••••••" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required />
+        </div>
+        <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', marginTop: 6, justifyContent: 'center' }}>
+          {loading ? '...' : '→ Se connecter'}
+        </button>
       </form>
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: 20,
-          fontSize: 13,
-          color: "var(--text-secondary)",
-        }}
-      >
-        Pas encore de compte ?{" "}
-        <Link
-          to="/inscription"
-          style={{ color: "var(--primary)", fontWeight: 600 }}
-        >
-          S'inscrire
-        </Link>
+      <div style={{ textAlign: 'center', marginTop: 18, fontSize: 12, color: 'var(--text-muted)' }}>
+        Pas de compte ? <Link to="/register" style={{ color: 'var(--primary)', fontWeight: 600 }}>S'inscrire</Link>
       </div>
-      <div
-        style={{
-          marginTop: 16,
-          padding: 12,
-          background: "var(--bg)",
-          borderRadius: 8,
-          fontSize: 12,
-          color: "var(--text-secondary)",
-        }}
-      >
-        <strong>Comptes de test :</strong>
-        <br />
-        admin / Admin123! (expert)
-        <br />
-        marie / Password123! (avancé)
-        <br />
-        lucas / Password123! (intermédiaire)
+      <div style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(0,212,255,0.03)', border: '1px solid var(--border)', borderRadius: 6, fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--mono)' }}>
+        <div style={{ color: 'var(--text-muted)', marginBottom: 4, fontFamily: 'sans-serif', fontSize: 10, textTransform: 'uppercase', letterSpacing: 1 }}>Comptes de test</div>
+        admin / Admin123! &nbsp;·&nbsp; marie / Password123!<br />
+        lucas / Password123! &nbsp;·&nbsp; emma / Password123!
+      </div>
+    </AuthLayout>
+  );
+}
+
+export function RegisterPage() {
+  const navigate = useNavigate();
+  const [form, setForm] = useState<RegisterForm>({ username: '', email: '', password: '', firstName: '', lastName: '', memberType: 'membre', age: '' });
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true); setError('');
+    try {
+      await registerApi(form);
+      setSuccess('Inscription réussie ! Un administrateur doit valider votre compte.');
+    } catch (err: any) {
+      setError(err.response?.data?.error ?? "Erreur d'inscription");
+    } finally { setLoading(false); }
+  };
+
+  if (success) return (
+    <AuthLayout title="Inscription" subtitle="Demande envoyée">
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: 40, marginBottom: 14 }}>✅</div>
+        <h3 style={{ fontWeight: 700, marginBottom: 8, color: 'var(--secondary)' }}>Demande soumise</h3>
+        <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 24 }}>{success}</p>
+        <button className="btn btn-primary" onClick={() => navigate('/login')}>→ Se connecter</button>
+      </div>
+    </AuthLayout>
+  );
+
+  return (
+    <AuthLayout title="Créer un accès" subtitle="Demande d'inscription à la plateforme">
+      {error && (
+        <div style={{ background: 'rgba(255,68,102,0.08)', border: '1px solid rgba(255,68,102,0.25)', borderLeft: '3px solid var(--danger)', borderRadius: 6, padding: '9px 12px', marginBottom: 16, fontSize: 13, color: 'var(--danger)' }}>
+          ⚠ {error}
+        </div>
+      )}
+      <form onSubmit={handleSubmit}>
+        <div className="grid-2">
+          <div className="form-group"><label className="form-label">Prénom</label><input className="form-input" placeholder="Marie" value={form.firstName} onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))} /></div>
+          <div className="form-group"><label className="form-label">Nom</label><input className="form-input" placeholder="Dupont" value={form.lastName} onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))} /></div>
+        </div>
+        <div className="form-group"><label className="form-label">Identifiant *</label><input className="form-input" placeholder="marie_d" value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Email *</label><input className="form-input" type="email" placeholder="marie@maison.fr" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Mot de passe * (8 min.)</label><input className="form-input" type="password" placeholder="••••••••" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required /></div>
+        <div className="grid-2">
+          <div className="form-group"><label className="form-label">Type</label>
+            <select className="form-select" value={form.memberType} onChange={e => setForm(f => ({ ...f, memberType: e.target.value }))}>
+              <option value="père">Père</option><option value="mère">Mère</option><option value="enfant">Enfant</option><option value="membre">Autre</option>
+            </select>
+          </div>
+          <div className="form-group"><label className="form-label">Âge</label><input className="form-input" type="number" min="1" max="120" placeholder="30" value={form.age} onChange={e => setForm(f => ({ ...f, age: e.target.value }))} /></div>
+        </div>
+        <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center' }}>
+          {loading ? '...' : '→ Soumettre la demande'}
+        </button>
+      </form>
+      <div style={{ textAlign: 'center', marginTop: 16, fontSize: 12, color: 'var(--text-muted)' }}>
+        Déjà un compte ? <Link to="/login" style={{ color: 'var(--primary)', fontWeight: 600 }}>Se connecter</Link>
       </div>
     </AuthLayout>
   );

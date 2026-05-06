@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { updateProfile, getMe } from "../utils/api";
 import { useToast, ToastContainer } from "../hooks/useToast";
-import { formatDate } from "../utils/helpers";
-import type { ProfileForm } from "../types";
 
 type dictLevel = "débutant" | "intermédiaire" | "avancé" | "expert";
 
